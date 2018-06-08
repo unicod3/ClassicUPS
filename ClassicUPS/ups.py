@@ -318,6 +318,7 @@ class Shipment(object):
                         'ShipperNumber': ups_conn.shipper_number,
                         'Address': {
                             'AddressLine1': from_addr['address1'],
+                            'AddressLine2': from_addr['address2'],
                             'City': from_addr['city'],
                             'CountryCode': from_addr['country'],
                             'PostalCode': from_addr['postal_code'],
@@ -329,6 +330,7 @@ class Shipment(object):
                         'PhoneNumber': to_addr['phone'],
                         'Address': {
                             'AddressLine1': to_addr['address1'],
+                            'AddressLine2': to_addr['address2'],
                             'City': to_addr['city'],
                             'CountryCode': to_addr['country'],
                             'PostalCode': to_addr['postal_code'],
