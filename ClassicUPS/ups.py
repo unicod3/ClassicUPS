@@ -177,6 +177,19 @@ class Rates(object):
                  dimensions_unit='IN', weight_unit='LBS'):
 
         packages_list = []
+        package_service_options = {}
+
+        if 'email' in from_addr and from_addr['email'] and 'email' in to_addr and to_addr['email']:
+            package_service_options = {
+                'Notification': {
+                    'NotificationCode': 6,
+                    'EMailMessage': {
+                        'EMailAddress': to_addr['email'],
+                        'FromEMailAdress':  from_addr['email'],
+                    }
+                }
+            }
+
         for package in packages:
             dimensions = package['dimensions']
             weight = package['weight']
@@ -200,7 +213,7 @@ class Rates(object):
                     },
                     'Weight': weight,
                 },
-                'PackageServiceOptions': {},
+                'PackageServiceOptions': package_service_options,
             })
 
         rates_request = {"RatingServiceSelectionRequest": {
@@ -274,6 +287,19 @@ class Shipment(object):
         self.file_format = file_format
 
         packages_list = []
+        package_service_options = {}
+
+        if 'email' in from_addr and from_addr['email'] and 'email' in to_addr and to_addr['email']:
+            package_service_options = {
+                'Notification': {
+                    'NotificationCode': 6,
+                    'EMailMessage': {
+                        'EMailAddress': to_addr['email'],
+                        'FromEMailAdress':  from_addr['email'],
+                    },
+                },
+            }
+
         for package in packages:
             dimensions = package['dimensions']
             weight = package['weight']
@@ -297,7 +323,7 @@ class Shipment(object):
                     },
                     'Weight': weight,
                 },
-                'PackageServiceOptions': {},
+                'PackageServiceOptions': package_service_options,
             })
 
         shipping_request = {
