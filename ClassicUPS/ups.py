@@ -177,18 +177,6 @@ class Rates(object):
                  dimensions_unit='IN', weight_unit='LBS'):
 
         packages_list = []
-        package_service_options = {}
-
-        if 'email' in from_addr and from_addr['email'] and 'email' in to_addr and to_addr['email']:
-            package_service_options = {
-                'Notification': {
-                    'NotificationCode': 6,
-                    'EMailMessage': {
-                        'EMailAddress': to_addr['email'],
-                        'FromEMailAdress':  from_addr['email'],
-                    }
-                }
-            }
 
         for package in packages:
             dimensions = package['dimensions']
@@ -213,7 +201,7 @@ class Rates(object):
                     },
                     'Weight': weight,
                 },
-                'PackageServiceOptions': package_service_options,
+                'PackageServiceOptions': {},
             })
 
         rates_request = {"RatingServiceSelectionRequest": {
@@ -287,17 +275,27 @@ class Shipment(object):
         self.file_format = file_format
 
         packages_list = []
-        package_service_options = {}
+        shipment_service_options = {}
 
         if 'email' in from_addr and from_addr['email'] and 'email' in to_addr and to_addr['email']:
-            package_service_options = {
-                'Notification': {
+            shipment_service_options = {
+                'Notification': [{
                     'NotificationCode': 6,
                     'EMailMessage': {
                         'EMailAddress': to_addr['email'],
-                        'FromEMailAdress':  from_addr['email'],
+                        'EMailAddress':  from_addr['email'],
                     },
-                },
+                }, {
+                    'NotificationCode': 7,
+                    'EMailMessage': {
+                        'EMailAddress': from_addr['email'],
+                    }
+                }, {
+                    'NotificationCode': 8,
+                    'EMailMessage': {
+                        'EMailAddress': from_addr['email'],
+                    }
+                }],
             }
 
         for package in packages:
@@ -323,7 +321,8 @@ class Shipment(object):
                     },
                     'Weight': weight,
                 },
-                'PackageServiceOptions': package_service_options,
+                'ShipmentServiceOptions': shipment_service_options,
+                'PackageServiceOptions': {},
             })
 
         shipping_request = {
