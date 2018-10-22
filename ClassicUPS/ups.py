@@ -100,7 +100,7 @@ class UPSConnection(object):
     def create_rates(self, *args, **kwargs):
         return Rates(self, *args, **kwargs)
 
-    def check_shipping_valid(self, *args, **kwards):
+    def check_shipping_valid(self, *args, **kwargs):
         return ShippingValid(self, *args, **kwargs)
 
 class UPSResult(object):
@@ -242,11 +242,11 @@ class Rates(object):
         }}
 
         if from_addr.get('state'):
-            shipping_request['RatingServiceSelectionRequest']['Shipment']['Shipper']['Address']['StateProvinceCode'] = from_addr['state']
-            shipping_request['RatingServiceSelectionRequest']['Shipment']['ShipFrom']['Address']['StateProvinceCode'] = from_addr['state']
+            rates_request['RatingServiceSelectionRequest']['Shipment']['Shipper']['Address']['StateProvinceCode'] = from_addr['state']
+            rates_request['RatingServiceSelectionRequest']['Shipment']['ShipFrom']['Address']['StateProvinceCode'] = from_addr['state']
 
         if to_addr.get('state'):
-            shipping_request['RatingServiceSelectionRequest']['Shipment']['ShipTo']['Address']['StateProvinceCode'] = to_addr['state']
+            rates_request['RatingServiceSelectionRequest']['Shipment']['ShipTo']['Address']['StateProvinceCode'] = to_addr['state']
 
         self.rate_result = ups_conn._transmit_request('rate', rates_request)
 
