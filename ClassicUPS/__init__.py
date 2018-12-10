@@ -1,1 +1,1 @@
-from ups import UPSConnection, UPSError, SHIPPING_SERVICES
+from .ups import UPSConnection, UPSError, SHIPPING_SERVICES
