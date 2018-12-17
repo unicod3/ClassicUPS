@@ -270,7 +270,8 @@ class Shipment(object):
     def __init__(self, ups_conn, from_addr, to_addr, packages, shipping_service, reference_numbers=None,
                  file_format='EPL',
                  description='', dimensions_unit='IN', weight_unit='LBS',
-                 delivery_confirmation=None):
+                 delivery_confirmation=None,
+                 payment_option={'type': 'BillShipper'}):
 
         self.file_format = file_format
 
@@ -325,6 +326,26 @@ class Shipment(object):
                 'PackageServiceOptions': {},
             })
 
+        payment_information = {
+            'Prepaid': {
+                'BillShipper': {
+                    'AccountNumber': ups_conn.shipper_number,
+                },
+            },
+        }
+        if payment_option['type'] == 'BillThirdParty':
+            payment_information = {
+                'Prepaid': {
+                    'BillThirdParty': {
+                        'AccountNumber': payment_option['third_party_account_number'],
+                        'Address':{
+                            'PostalCode': payment_option['third_party_postal_code'],
+                            'CountryCode': payment_option['third_party_country_code']
+                        }
+                    },
+                },
+            }
+
         shipping_request = {
             'ShipmentConfirmRequest': {
                 'Request': {
@@ -367,13 +388,7 @@ class Shipment(object):
                         'Code': SHIPPING_SERVICES[shipping_service],
                         'Description': shipping_service,
                     },
-                    'PaymentInformation': {  # TODO: Other payment information
-                        'Prepaid': {
-                            'BillShipper': {
-                                'AccountNumber': ups_conn.shipper_number,
-                            },
-                        },
-                    }
+                    'PaymentInformation': payment_information
                 },
                 'LabelSpecification': {  # TODO: support GIF and EPL (and others)
                     'LabelPrintMethod': {
