@@ -336,11 +336,15 @@ class Shipment(object):
         if payment_option['type'] == 'BillThirdParty':
             payment_information = {
                 'BillThirdParty': {
-                    'AccountNumber': payment_option['third_party_account_number'],
-                    'Address':{
-                        'PostalCode': payment_option['third_party_postal_code'],
-                        'CountryCode': payment_option['third_party_country_code']
-                    }
+                    'BillThirdPartyShipper':{
+                        'AccountNumber': payment_option['third_party_account_number'],
+                        'ThirdParty':{
+                            'Address':{
+                                'PostalCode': payment_option['third_party_postal_code'],
+                                'CountryCode': payment_option['third_party_country_code']
+                            }
+                        }
+                    },
                 },
             }
 
