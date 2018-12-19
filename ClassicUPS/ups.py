@@ -431,7 +431,7 @@ class Shipment(object):
             #reference_dict[0]['BarCodeIndicator'] = '1'
 
             if from_addr['country'] == 'US' and to_addr['country'] == 'US':
-                shipping_request['ShipmentConfirmRequest']['Shipment']['Package']['ReferenceNumber'] = reference_dict
+                shipping_request['ShipmentConfirmRequest']['Shipment']['Package'][0]['ReferenceNumber'] = reference_dict
             else:
                 shipping_request['ShipmentConfirmRequest']['Shipment']['Description'] = description
                 shipping_request['ShipmentConfirmRequest']['Shipment']['ReferenceNumber'] = reference_dict
