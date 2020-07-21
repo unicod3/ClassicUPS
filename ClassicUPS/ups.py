@@ -16,9 +16,11 @@ SHIPPING_SERVICES = {
     '3_day_select': '12',  # 3 Day Select
     'next_day_air_saver': '13',  # Next Day Air Saver
     'next_day_air_early_am': '14',  # Next Day Air Early AM
+    'worldwide_economy_ddu': '17',  # Worldwide Economy DDU
     'express_plus': '54',  # Express Plus
     '2nd_day_air_am': '59',  # 2nd Day Air A.M.
     'ups_saver': '65',  # UPS Saver.
+    'worldwide_economy_ddp': '72',  # Worldwide Economy DDP
     'ups_today_standard': '82',  # UPS Today Standard
     'ups_today_dedicated_courier': '83',  # UPS Today Dedicated Courier
     'ups_today_intercity': '84',  # UPS Today Intercity
