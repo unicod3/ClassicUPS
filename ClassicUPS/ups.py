@@ -377,7 +377,7 @@ class Shipment(object):
                     'ShipTo' : {
                         'Name': to_addr['name'],
                         'CompanyName': '',
-                        'AttentionName': '',
+                        'AttentionName': to_addr.get('attn') if to_addr.get('attn') else to_addr['name'],
                         'PhoneNumber': to_addr['phone'],
                         'Address': {
                             'AddressLine1': to_addr['address1'],
