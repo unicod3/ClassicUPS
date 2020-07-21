@@ -273,7 +273,9 @@ class Shipment(object):
                  file_format='EPL',
                  description='', dimensions_unit='IN', weight_unit='LBS',
                  delivery_confirmation=None,
-                 payment_option={'type': 'BillShipper'}):
+                 payment_option={'type': 'BillShipper'},
+                 invoiceLineTotal=None
+                ):
 
         self.file_format = file_format
 
@@ -411,6 +413,9 @@ class Shipment(object):
             },
         }
 
+        if invoiceLineTotal:
+            shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoiceLineTotal
+            
         if delivery_confirmation:
             shipping_request['ShipmentConfirmRequest']['Shipment']['Package']['PackageServiceOptions']['DeliveryConfirmation'] = {
                 'DCISType': self.DCIS_TYPES[delivery_confirmation]
