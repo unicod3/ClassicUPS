@@ -274,7 +274,8 @@ class Shipment(object):
                  description='', dimensions_unit='IN', weight_unit='LBS',
                  delivery_confirmation=None,
                  payment_option={'type': 'BillShipper'},
-                 invoiceLineTotal=None
+                 invoice_line_total=None,
+                 label_specification=None
                 ):
 
         self.file_format = file_format
@@ -413,8 +414,11 @@ class Shipment(object):
             },
         }
 
-        if invoiceLineTotal:
-            shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoiceLineTotal
+        if invoice_line_total:
+            shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoice_line_total
+            
+        if label_specification:
+            shipping_request['ShipmentConfirmRequest']['LabelSpecification'] = label_specification
             
         if delivery_confirmation:
             shipping_request['ShipmentConfirmRequest']['Shipment']['Package']['PackageServiceOptions']['DeliveryConfirmation'] = {
