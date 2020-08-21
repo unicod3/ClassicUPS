@@ -26,6 +26,7 @@ SHIPPING_SERVICES = {
     'ups_today_intercity': '84',  # UPS Today Intercity
     'ups_today_express': '85',  # UPS Today Express
     'ups_today_express_saver': '86',  # UPS Today Express Saver.
+    'ups_sure_post': '93',  # UPS Today Express Saver.
 }
 
 class UPSError(Exception):
