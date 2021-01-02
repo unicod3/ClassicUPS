@@ -397,7 +397,33 @@ class Shipment(object):
                         'Code': SHIPPING_SERVICES[shipping_service],
                         'Description': shipping_service,
                     },
-                    'PaymentInformation': payment_information
+                    'PaymentInformation': payment_information,
+                    'SurePostShipment': {
+                        'USPSEndorsement': '1',
+                        #'SubClassification': 'MA' or IR  if package less than 1 lb
+                    },
+                    'ShipmentServiceOptions': {
+                        'InternationalForms': {
+                            'CN22Form': {
+                                'LabelSize': '6',
+                                'PrintsPerPage': '1',
+                                'LabelPrintType': 'png',
+                                'CN22Type': '4',
+                                'CN22OtherDescription': 'Area Rug',
+                                'CN22Content': {
+                                    'CN22ContentQuantity': '1',
+                                    'CN22ContentDescription': 'Area Rug',
+                                    'CN22ContentWeight': weight,
+                                    'UnitOfMeasurement': {
+                                        'Code': 'lbs',
+                                        'Weight': weight,
+                                        'CN22ContentTotalValue': invoice_line_total,
+                                        'CN22ContentCurrencyCode': 'usd'
+                                    }
+                                },
+                            }
+                        }
+                    }
                 },
                 'LabelSpecification': {  # TODO: support GIF and EPL (and others)
                     'LabelPrintMethod': {
