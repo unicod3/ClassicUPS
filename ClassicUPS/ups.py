@@ -276,7 +276,8 @@ class Shipment(object):
                  delivery_confirmation=None,
                  payment_option={'type': 'BillShipper'},
                  invoice_line_total=None,
-                 label_specification=None
+                 label_specification=None,
+                 sure_post_params={}
                 ):
 
         self.file_format = file_format
@@ -397,33 +398,7 @@ class Shipment(object):
                         'Code': SHIPPING_SERVICES[shipping_service],
                         'Description': shipping_service,
                     },
-                    'PaymentInformation': payment_information,
-                    'SurePostShipment': {
-                        'USPSEndorsement': '1',
-                        #'SubClassification': 'MA' or IR  if package less than 1 lb
-                    },
-                    'ShipmentServiceOptions': {
-                        'InternationalForms': {
-                            'CN22Form': {
-                                'LabelSize': '6',
-                                'PrintsPerPage': '1',
-                                'LabelPrintType': 'png',
-                                'CN22Type': '4',
-                                'CN22OtherDescription': 'Area Rug',
-                                'CN22Content': {
-                                    'CN22ContentQuantity': '1',
-                                    'CN22ContentDescription': 'Area Rug',
-                                    'CN22ContentWeight': weight,
-                                    'UnitOfMeasurement': {
-                                        'Code': 'lbs',
-                                        'Weight': weight,
-                                        'CN22ContentTotalValue': invoice_line_total,
-                                        'CN22ContentCurrencyCode': 'usd'
-                                    }
-                                },
-                            }
-                        }
-                    }
+                    'PaymentInformation': payment_information
                 },
                 'LabelSpecification': {  # TODO: support GIF and EPL (and others)
                     'LabelPrintMethod': {
@@ -440,6 +415,11 @@ class Shipment(object):
                 },
             },
         }
+
+        if sure_post_params:
+            shipping_request['ShipmentConfirmRequest']['Shipment']['SurePostShipment'] = {}
+            for key in sure_post_params:
+                shipping_request['ShipmentConfirmRequest']['Shipment']['SurePostShipment'][key] = sure_post_params[key]
 
         if invoice_line_total:
             shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoice_line_total
