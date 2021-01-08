@@ -276,7 +276,8 @@ class Shipment(object):
                  delivery_confirmation=None,
                  payment_option={'type': 'BillShipper'},
                  invoice_line_total=None,
-                 label_specification=None
+                 label_specification=None,
+                 sure_post_params={}
                 ):
 
         self.file_format = file_format
@@ -414,6 +415,11 @@ class Shipment(object):
                 },
             },
         }
+
+        if sure_post_params:
+            shipping_request['ShipmentConfirmRequest']['Shipment']['SurePostShipment'] = {}
+            for key in sure_post_params:
+                shipping_request['ShipmentConfirmRequest']['Shipment']['SurePostShipment'][key] = sure_post_params[key]
 
         if invoice_line_total:
             shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoice_line_total
