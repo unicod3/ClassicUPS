@@ -428,7 +428,7 @@ class Shipment(object):
             shipping_request['ShipmentConfirmRequest']['LabelSpecification'] = label_specification
 
         if delivery_confirmation:
-            shipping_request['ShipmentConfirmRequest']['Shipment']['Package']['PackageServiceOptions']['DeliveryConfirmation'] = {
+            shipping_request['ShipmentConfirmRequest']['Shipment']['Package'][0]['PackageServiceOptions']['DeliveryConfirmation'] = {
                 'DCISType': self.DCIS_TYPES[delivery_confirmation]
             }
 
