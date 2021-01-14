@@ -263,13 +263,6 @@ class Rates(object):
 
 class Shipment(object):
 
-    DCIS_TYPES = {
-        'no_signature': 1,
-        'signature_required': 2,
-        'adult_signature_required': 3,
-        'usps_delivery_confiratmion': 4,
-    }
-
     def __init__(self, ups_conn, from_addr, to_addr, packages, shipping_service, reference_numbers=None,
                  file_format='EPL',
                  description='', dimensions_unit='IN', weight_unit='LBS',
@@ -279,6 +272,13 @@ class Shipment(object):
                  label_specification=None,
                  sure_post_params={}
                 ):
+
+        self.DCIS_TYPES = {
+            'no_signature': 1,
+            'signature_required': 2,
+            'adult_signature_required': 3,
+            'usps_delivery_confiratmion': 4,
+        }
 
         self.file_format = file_format
 
@@ -423,10 +423,10 @@ class Shipment(object):
 
         if invoice_line_total:
             shipping_request['ShipmentConfirmRequest']['Shipment']['InvoiceLineTotal'] = invoice_line_total
-            
+
         if label_specification:
             shipping_request['ShipmentConfirmRequest']['LabelSpecification'] = label_specification
-            
+
         if delivery_confirmation:
             shipping_request['ShipmentConfirmRequest']['Shipment']['Package']['PackageServiceOptions']['DeliveryConfirmation'] = {
                 'DCISType': self.DCIS_TYPES[delivery_confirmation]
